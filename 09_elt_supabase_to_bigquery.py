@@ -16,16 +16,16 @@ import psycopg2
 import pandas as pd
 import numpy as np
 
-# Connection URIs (Pooler and Direct)
-CONNECTION_URIS = [
-    "postgresql://postgres.hraipqaksitkchkhhdye:Fi4nMf2MXD668s3x@aws-1-eu-west-2.pooler.supabase.com:6543/postgres?sslmode=require",
-    "postgresql://postgres:Fi4nMf2MXD668s3x@db.hraipqaksitkchkhhdye.supabase.co:5432/postgres?sslmode=require",
-    "postgresql://postgres.hraipqaksitkchkhhdye:Fi4nMf2MXD668s3x@aws-1-eu-west-2.pooler.supabase.com:6543/postgres"
-]
+# Connection URIs — loaded from environment variables for security.
+# Set SUPABASE_DB_URL in your shell before running:
+#   $env:SUPABASE_DB_URL = "postgresql://postgres:<PASSWORD>@<HOST>:<PORT>/postgres?sslmode=require"
+SUPABASE_DB_URL = os.getenv("SUPABASE_DB_URL", "")
+CONNECTION_URIS = [SUPABASE_DB_URL] if SUPABASE_DB_URL else []
 
 GCP_PROJECT_ID = os.getenv("GCP_PROJECT_ID", "veridian-concord-project")
 BQ_DATASET_ID = "veridian_concord_analytics"
-BASE_CSV_DIR = r"c:\Users\enyis\Documents\SQL PROJECT CONCORD\csv files"
+# Set BASE_CSV_DIR to the path of your local 'csv files' folder, or set env var CSV_BASE_DIR
+BASE_CSV_DIR = os.getenv("CSV_BASE_DIR", os.path.join(os.path.dirname(__file__), "..", "csv files"))
 
 # Auto-detect GCP Service Key
 SERVICE_KEY_PATH = r"c:\Users\enyis\Documents\SQL PROJECT CONCORD\05_Team_Workflow_&_Execution\gcp_service_key.json"

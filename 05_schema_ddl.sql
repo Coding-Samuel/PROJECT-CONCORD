@@ -360,7 +360,8 @@ CREATE TABLE logistics.shipments (
             'DELAYED',
             'CANCELLED'
         )
-    )
+    ),
+    CONSTRAINT chk_diff_locations CHECK (destination_location_id <> origin_location_id)
 );
 CREATE TABLE logistics.shipment_legs (
     leg_id VARCHAR(40) PRIMARY KEY,
